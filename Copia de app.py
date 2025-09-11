@@ -41,7 +41,12 @@ def process_and_clean_data(df, materia_seleccionada, proveedores_excluir, select
     
     # Filtrar por materia prima
     if 'MateriaPrima' in df.columns and materia_seleccionada != 'Todas':
-        df_filtered = df_filtered[df_filtered['MateriaPrima'] == materia_seleccionada]
+        if isinstance(materia_seleccionada, list):
+            # Si es una lista de materias primas
+            df_filtered = df_filtered[df_filtered['MateriaPrima'].isin(materia_seleccionada)]
+        else:
+            # Si es una sola materia prima (compatibilidad hacia atrás)
+            df_filtered = df_filtered[df_filtered['MateriaPrima'] == materia_seleccionada]
     
     # Excluir proveedores
     if 'Proveedor' in df.columns and proveedores_excluir:
@@ -91,10 +96,24 @@ def show_data_interface(df):
         st.write(f"- Materias primas disponibles: {', '.join(materias_disponibles)}")
         
         if len(materias_disponibles) > 1:
-            materia_seleccionada = st.selectbox(
-                "Selecciona la materia prima a analizar:",
-                ['Todas'] + list(materias_disponibles)
-            )
+            # Opción para seleccionar todas
+            todas_seleccionadas = st.checkbox("Seleccionar todas las materias primas", value=True)
+            
+            if todas_seleccionadas:
+                materia_seleccionada = 'Todas'
+                st.info("✅ Analizando todas las materias primas")
+            else:
+                materias_seleccionadas = st.multiselect(
+                    "Selecciona una o varias materias primas a analizar:",
+                    list(materias_disponibles),
+                    default=[]
+                )
+                if materias_seleccionadas:
+                    materia_seleccionada = materias_seleccionadas
+                    st.info(f"✅ Analizando: {', '.join(materias_seleccionadas)}")
+                else:
+                    st.warning("⚠️ Por favor selecciona al menos una materia prima")
+                    materia_seleccionada = 'Todas'
     else:
         st.info("ℹ️ Columna 'MateriaPrima' no encontrada, usando todos los datos")
     
@@ -103,7 +122,10 @@ def show_data_interface(df):
     if 'Proveedor' in df.columns:
         df_temp = df.copy()
         if materia_seleccionada != 'Todas':
-            df_temp = df_temp[df_temp['MateriaPrima'] == materia_seleccionada]
+            if isinstance(materia_seleccionada, list):
+                df_temp = df_temp[df_temp['MateriaPrima'].isin(materia_seleccionada)]
+            else:
+                df_temp = df_temp[df_temp['MateriaPrima'] == materia_seleccionada]
         
         proveedores_disponibles = df_temp['Proveedor'].unique()
         st.write(f"- Proveedores disponibles: {len(proveedores_disponibles)}")
@@ -118,7 +140,10 @@ def show_data_interface(df):
     # Buscar variables objetivo
     df_temp = df.copy()
     if materia_seleccionada != 'Todas' and 'MateriaPrima' in df.columns:
-        df_temp = df_temp[df_temp['MateriaPrima'] == materia_seleccionada]
+        if isinstance(materia_seleccionada, list):
+            df_temp = df_temp[df_temp['MateriaPrima'].isin(materia_seleccionada)]
+        else:
+            df_temp = df_temp[df_temp['MateriaPrima'] == materia_seleccionada]
     if proveedores_excluir and 'Proveedor' in df.columns:
         df_temp = df_temp[~df_temp['Proveedor'].isin(proveedores_excluir)]
     
