@@ -35,11 +35,13 @@ El código fuente de este proyecto está disponible aquí:
    git clone https://github.com/a01738983-lab/super-duper-disco.git
    cd super-duper-disco
 
-2. Instalar las dependencias:
-   pip install -r requirements.txt
 
-3. Ejecutar la aplicación:
-   streamlit run app.py
+2. Instalar las dependencias:  
+pip install -r requirements.txt
+
+
+3. Ejecutar la aplicación:  
+streamlit run app.py
 
 
 📊 Uso
