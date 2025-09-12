@@ -24,7 +24,7 @@ Puedes acceder al dashboard sin necesidad de instalar nada desde este enlace:
 
 El código fuente de este proyecto está disponible aquí:  
 
-👉 [Ir al repositorio](https://github.com/a01738983-lab/super-duper-disco)  
+👉 [Ir al repositorio](https://github.com/a01738983-lab/equipo1-regresion-lineal)  
 
 ---
 
@@ -32,8 +32,8 @@ El código fuente de este proyecto está disponible aquí:
 
 1. Clonar este repositorio:  
    ```bash
-   git clone https://github.com/a01738983-lab/super-duper-disco.git
-   cd super-duper-disco
+   git clone https://github.com/a01738983-lab/equipo1-regresion-lineal.git
+   cd equipo1-regresion-lineal
 
 
 2. Instalar las dependencias:
