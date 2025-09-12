@@ -12,7 +12,7 @@ El sistema permite:
 
 ---
 
-## 🚀 Demo en línea
+## 🚀 Dashboard en línea
 
 Puedes acceder al dashboard sin necesidad de instalar nada desde este enlace:  
 
